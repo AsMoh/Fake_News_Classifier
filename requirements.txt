@@ -8,3 +8,4 @@ seaborn==0.11.2
 streamlit>=1.8.1
 nltk==3.7
 contractions==0.1.73
+xgboost==1.7.5
