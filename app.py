@@ -8,8 +8,8 @@ import contractions
 import nltk
 
 # Load the classification model
-model = joblib.load(r'C:\Users\Asia\Data_Science_Code\new intership\Neural Networks\NLP\Assignment-fake_news\fake_news_model.joblib')
-transformer = joblib.load(r'C:\Users\Asia\Data_Science_Code\new intership\Neural Networks\NLP\Assignment-fake_news\transformer_tfidf.joblib')
+model = joblib.load('fake_news_model.joblib')
+transformer = joblib.load('transformer_tfidf.joblib')
 
 stemmer=PorterStemmer()
 
