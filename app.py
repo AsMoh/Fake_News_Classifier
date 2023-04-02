@@ -7,6 +7,8 @@ import re
 import contractions
 import nltk
 
+nltk.download('punkt')
+
 # Load the classification model
 model = joblib.load('fake_news_model.joblib')
 transformer = joblib.load('transformer_tfidf.joblib')
