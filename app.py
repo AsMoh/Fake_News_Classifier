@@ -13,6 +13,7 @@ nltk.download('punkt')
 model = joblib.load('fake_news_model.joblib')
 transformer = joblib.load('transformer_tfidf.joblib')
 
+
 stemmer=PorterStemmer()
 
 stop_wrds=['sometimes', 'ever', 'already', 'that', 'else', 'each', 'then', 'itself', 'whom', 'quite', "should've", 'regarding']
@@ -35,22 +36,20 @@ def app():
     st.set_page_config(page_title="Fake News Classifier", page_icon=":guardsman:", layout="wide")
 
     # Define the layout of the app
+    st.sidebar.markdown("# Fake News Classifier")
+    st.sidebar.markdown("Enter the title, author, and text of the news article you want to check for authenticity.")
+    st.sidebar.markdown("The app will analyze the input and predict whether the news is real or fake.")
+
     st.title("Fake News Classifier")
-    col1, col2, col3 = st.columns(3)
 
     # Add text input fields for title, author and news text
-    with col1:
-        st.markdown("<h3 style='text-align: center; font-weight: bold;'>Title</h3>", unsafe_allow_html=True)
-        title = st.text_input(" " , key="title")
-    with col2:
-        st.markdown("<h3 style='text-align: center; font-weight: bold;'>Author</h3>", unsafe_allow_html=True)
-        author = st.text_input(" " , key="author")
-    with col3:
-        st.markdown("<h3 style='text-align: center; font-weight: bold;'>News Text</h3>", unsafe_allow_html=True)
-        text = st.text_area(" ", key="text",height=100)
+    st.subheader("Enter the News Article Details")
+    title = st.text_input("Title")
+    author = st.text_input("Author")
+    text = st.text_area("Text", height=100)
 
     # Add a button to classify the news
-    if st.button("Classify"):
+    if st.button("Check for Fake News"):
         # Make a prediction using the classification model
         df = pd.DataFrame([[title, author, text]], columns=["title", "author", "text"])
         df.fillna("", inplace=True)
@@ -59,10 +58,16 @@ def app():
         
         transformed_txt=transformer.transform(df['content'])
         prediction = model.predict(transformed_txt)
-        print(prediction , type(prediction))
+        
         # Display the prediction
         if prediction == 1:
             st.error("This news is likely fake!")
         else:
             st.success("This news is likely real.")
-app()
+
+    # Add a footer with some information about the app
+    st.markdown("---")
+   
+if __name__ == "__main__":
+    app()
+    
